@@ -7,7 +7,7 @@ import YouTubeEmbed from "./YouTubeEmbed";
 import Link from "next/link";
 import { projects, Project } from "@/data/projects";
 
-const videoCategories = ["All", "Event Cinematography", "Creative Product", "Shorts Content", "Social Media Manage"];
+const videoCategories = ["All", "Event Cinematography", "Creative Product", "Shorts Content", "Social Media Management"];
 
 // Subcomponent for handling each distinct visual grid layer
 function ProjectGrid({ projArray, showFilters = false }: { projArray: Project[], showFilters?: boolean }) {
@@ -99,17 +99,27 @@ function ProjectGrid({ projArray, showFilters = false }: { projArray: Project[],
                                 </>
                             )}
 
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 flex flex-col justify-end p-8 pointer-events-none">
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 flex flex-col justify-end p-6 md:p-8 pointer-events-none">
                                 <motion.p
-                                    className="text-brand-gold text-xs uppercase tracking-widest font-medium mb-2 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-700"
+                                    className="text-brand-gold text-[10px] uppercase tracking-[0.2em] font-bold mb-2 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-700"
                                 >
                                     {project.category}
                                 </motion.p>
                                 <motion.h4
-                                    className="text-2xl font-playfair font-bold text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-700 delay-100"
+                                    className="text-xl md:text-2xl font-playfair font-bold text-white mb-3 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-700 delay-100"
                                 >
                                     {project.client}
                                 </motion.h4>
+                                <motion.div
+                                    className="space-y-2 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-700 delay-200"
+                                >
+                                    <p className="text-white/60 text-xs md:text-sm line-clamp-2 md:line-clamp-none font-light leading-relaxed">
+                                        {project.description}
+                                    </p>
+                                    <p className="text-brand-gold/80 text-[10px] uppercase tracking-wider font-semibold">
+                                        Role: {project.role}
+                                    </p>
+                                </motion.div>
                             </div>
                         </motion.div>
                     ))}
@@ -120,18 +130,37 @@ function ProjectGrid({ projArray, showFilters = false }: { projArray: Project[],
 }
 
 export default function SelectedWorks() {
-    // Array separation matching the user's specific request
-    const motionVideos = projects.filter(p => ['youtube', 'instagram', 'video'].includes(p.type));
-    const editedPhotos = projects.filter(p => p.type === 'image' && p.client !== 'Unedited Series');
-    const uneditedPhotos = projects.filter(p => p.type === 'image' && p.client === 'Unedited Series');
+    // Logic separation for enhanced layout
+    const showreel = projects.find(p => p.category === 'Showreel');
+    const motionVideos = projects.filter(p => ['youtube', 'instagram', 'video'].includes(p.type) && p.category !== 'Showreel');
+    const editedPhotos = projects.filter(p => p.type === 'image' && p.category !== 'Behind The Scenes');
+    const btsPhotos = projects.filter(p => p.category === 'Behind The Scenes');
 
     return (
-        <section className="py-32 px-4 md:px-8 max-w-7xl mx-auto w-full z-20 relative bg-black space-y-32">
+        <section id="works" className="py-32 px-4 md:px-8 max-w-7xl mx-auto w-full z-20 relative bg-black space-y-32">
+
+            {/* Showreel Section */}
+            {showreel && (
+                <div className="space-y-12">
+                    <div className="text-center md:text-left transition-all duration-700">
+                        <h2 className="text-sm font-medium tracking-[0.2em] text-brand-gold uppercase mb-4 italic px-4 border-l-2 border-brand-gold">Featured Reel</h2>
+                        <h3 className="text-4xl md:text-6xl lg:text-7xl font-playfair font-bold max-w-3xl leading-tight">Capturing movement, light & emotion.</h3>
+                    </div>
+                    <div className="relative aspect-video rounded-3xl overflow-hidden border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] bg-gray-900 group">
+                        <YouTubeEmbed videoId={showreel.src} autoPlay={false} loop={true} />
+                        <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/80 via-transparent to-transparent group-hover:opacity-0 transition-opacity duration-1000" />
+                        <div className="absolute bottom-6 left-6 md:bottom-12 md:left-12 text-white z-10 hidden sm:block">
+                            <h4 className="text-2xl md:text-4xl font-playfair font-bold mb-3">{showreel.client}</h4>
+                            <p className="text-white/60 max-w-xl text-sm md:text-base italic font-light leading-relaxed">{showreel.description}</p>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {/* Videos Section */}
             <div>
                 <div className="mb-12">
-                    <h2 className="text-sm font-medium tracking-[0.2em] text-brand-gold uppercase mb-4">Portfolio</h2>
+                    <h2 className="text-sm font-medium tracking-[0.2em] text-brand-gold uppercase mb-4 px-4 border-l-2 border-brand-gold">Portfolio</h2>
                     <h3 className="text-4xl md:text-5xl lg:text-6xl font-playfair font-bold">Cinematography & Motion.</h3>
                 </div>
                 <ProjectGrid projArray={motionVideos} showFilters={true} />
@@ -140,19 +169,19 @@ export default function SelectedWorks() {
             {/* Edited Photos Section */}
             <div>
                 <div className="mb-12">
-                    <h2 className="text-sm font-medium tracking-[0.2em] text-brand-gold uppercase mb-4">Gallery</h2>
+                    <h2 className="text-sm font-medium tracking-[0.2em] text-brand-gold uppercase mb-4 px-4 border-l-2 border-brand-gold">Gallery</h2>
                     <h3 className="text-4xl md:text-5xl lg:text-6xl font-playfair font-bold">Creative & Edited Photography.</h3>
                 </div>
                 <ProjectGrid projArray={editedPhotos} showFilters={false} />
             </div>
 
-            {/* Unedited Photos Section */}
+            {/* Behind The Scenes Section */}
             <div>
                 <div className="mb-12">
-                    <h2 className="text-sm font-medium tracking-[0.2em] text-brand-gold uppercase mb-4">Behind The Scenes</h2>
-                    <h3 className="text-4xl md:text-5xl lg:text-6xl font-playfair font-bold">Raw & Unedited Flatlays.</h3>
+                    <h2 className="text-sm font-medium tracking-[0.2em] text-brand-gold uppercase mb-4 px-4 border-l-2 border-brand-gold">Behind The Scenes</h2>
+                    <h3 className="text-4xl md:text-5xl lg:text-6xl font-playfair font-bold">Raw & Unedited Process.</h3>
                 </div>
-                <ProjectGrid projArray={uneditedPhotos} showFilters={false} />
+                <ProjectGrid projArray={btsPhotos} showFilters={false} />
             </div>
 
         </section>

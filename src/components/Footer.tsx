@@ -16,7 +16,7 @@ export default function Footer() {
                     <Link href="mailto:nicki.worksallthetime@gmail.com" className="hover:text-white transition-colors">
                         nicki.worksallthetime@gmail.com
                     </Link>
-                    <Link href="#" className="hover:text-white transition-colors">
+                    <Link href="https://instagram.com/nikithaao" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
                         Instagram
                     </Link>
                     <Link href="https://linkedin.com/in/nikitharao" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">

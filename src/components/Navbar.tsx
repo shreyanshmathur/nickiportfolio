@@ -25,7 +25,7 @@ export default function Navbar() {
             className="fixed top-0 left-0 w-full z-50 py-6 px-8 flex justify-between items-center transition-colors duration-300"
         >
             <div className="text-xl font-playfair font-bold tracking-wider relative group">
-                <Link href="/">N.R</Link>
+                <Link href="/">NR</Link>
                 <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full"></span>
             </div>
 

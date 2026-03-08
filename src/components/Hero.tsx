@@ -56,13 +56,50 @@ export default function Hero() {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                    className="flex flex-wrap justify-center gap-4 text-sm md:text-lg text-gray-200 font-light tracking-wide uppercase drop-shadow-lg"
+                    className="flex flex-col items-center gap-8"
                 >
-                    <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.0 }}>Creative Project Manager</motion.span>
-                    <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.1 }} className="hidden md:inline text-brand-gold">•</motion.span>
-                    <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2 }}>DOP</motion.span>
-                    <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.3 }} className="hidden md:inline text-brand-gold">•</motion.span>
-                    <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.4 }}>Post-Production Supervisor</motion.span>
+                    <div className="flex flex-wrap justify-center gap-4 text-sm md:text-lg text-gray-200 font-light tracking-wide uppercase drop-shadow-lg">
+                        <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.0 }}>Creative Project Manager</motion.span>
+                        <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.1 }} className="hidden md:inline text-brand-gold">•</motion.span>
+                        <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2 }}>DOP</motion.span>
+                        <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.3 }} className="hidden md:inline text-brand-gold">•</motion.span>
+                        <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.4 }}>Post-Production Supervisor</motion.span>
+                    </div>
+
+                    <motion.p
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 1, delay: 1.6 }}
+                        className="max-w-2xl text-center text-gray-300 text-sm md:text-base font-light italic leading-relaxed"
+                    >
+                        Building visual stories for luxury brands and digital campaigns across Mumbai.
+                        Specialize in translating high-level briefs into content that performs.
+                    </motion.p>
+
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.5, delay: 1.8 }}
+                    >
+                        <button
+                            onClick={() => document.getElementById('works')?.scrollIntoView({ behavior: 'smooth' })}
+                            className="inline-flex items-center px-8 py-3 rounded-full bg-brand-gold text-black font-semibold tracking-wider transition-all hover:scale-105 hover:bg-white active:scale-95 group"
+                        >
+                            View My Work
+                            <svg className="ml-2 w-4 h-4 transform group-hover:translate-y-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                            </svg>
+                        </button>
+                    </motion.div>
+
+                    <motion.p
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 2.0 }}
+                        className="text-[10px] uppercase tracking-[0.2em] text-gray-500"
+                    >
+                        Available for freelance & full-time opportunities
+                    </motion.p>
                 </motion.div>
             </div>
 

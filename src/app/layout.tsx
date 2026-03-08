@@ -18,8 +18,9 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Nikitha Rao | Creative Project Manager & DOP",
-  description: "Portfolio of Nikitha Rao - Brand Manager, Creative Project Manager, Post-Production Supervisor, and Content Creator.",
+  title: "Nikitha Rao | Visual Storyteller & Creative Project Manager",
+  description: "Portfolio of Nikitha Rao, a Visual Storyteller, DOP, and Creative Project Manager based in Mumbai. Specialized in luxury brand campaigns, event cinematography, and social media strategy.",
+  keywords: ["Nikitha Rao", "Visual Storyteller", "DOP Mumbai", "Creative Project Manager", "Luxury Brand Content", "Cinematography", "Social Media Strategy"],
 };
 
 export default function RootLayout({
