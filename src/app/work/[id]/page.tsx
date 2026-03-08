@@ -82,12 +82,13 @@ export default async function WorkPage({ params }: { params: Promise<{ id: strin
 
                         <h3 className="text-gray-400 uppercase tracking-widest text-xs mb-2">Description</h3>
                         <p className="text-base text-gray-300 font-light leading-relaxed">
+                            {project.description}
                         </p>
                     </div>
                 </div>
 
                 {/* Project Navigation */}
-                <div className="mt-24 pt-12 border-t border-white/10 flex justify-between items-center">
+                <div className="mt-24 pt-12 border-t border-white/10 flex justify-between items-stretch min-h-[100px]">
                     {(() => {
                         const currentIndex = projects.findIndex(p => p.id === id);
                         const prevProject = currentIndex > 0 ? projects[currentIndex - 1] : null;
@@ -95,7 +96,7 @@ export default async function WorkPage({ params }: { params: Promise<{ id: strin
 
                         return (
                             <>
-                                <div className="flex-1">
+                                <div className="flex-1 flex flex-col justify-center">
                                     {prevProject && (
                                         <Link href={`/work/${prevProject.id}`} className="group flex flex-col items-start gap-2 hover:opacity-70 transition-opacity">
                                             <span className="text-[10px] uppercase tracking-[0.2em] text-gray-500 flex items-center">
@@ -108,9 +109,11 @@ export default async function WorkPage({ params }: { params: Promise<{ id: strin
                                     )}
                                 </div>
 
-                                <div className="w-[1px] h-12 bg-white/10 mx-8"></div>
+                                {(prevProject || nextProject) && (
+                                    <div className="w-[1px] bg-white/10 mx-8"></div>
+                                )}
 
-                                <div className="flex-1 text-right">
+                                <div className="flex-1 text-right flex flex-col justify-center">
                                     {nextProject && (
                                         <Link href={`/work/${nextProject.id}`} className="group flex flex-col items-end gap-2 hover:opacity-70 transition-opacity">
                                             <span className="text-[10px] uppercase tracking-[0.2em] text-gray-500 flex items-center">
