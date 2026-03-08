@@ -1,8 +1,20 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import YouTubeEmbed from '@/components/YouTubeEmbed';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { projects } from '@/data/projects';
+
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+    const { id } = await params;
+    const project = projects.find(p => p.id === id);
+
+    if (!project) return { title: 'Project Not Found' };
+
+    return {
+        title: `${project.client} | Nikitha Rao`,
+        description: project.description,
+    };
+}
 
 export default async function WorkPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
@@ -24,7 +36,7 @@ export default async function WorkPage({ params }: { params: Promise<{ id: strin
                     <div className="lg:col-span-8">
                         <div className="bg-gray-950 rounded-xl overflow-hidden border border-white/10 w-full h-[60vh] lg:h-[80vh] shadow-2xl relative flex items-center justify-center">
                             {project.type === 'youtube' ? (
-                                <YouTubeEmbed videoId={project.src} autoPlay={true} loop={true} />
+                                <YouTubeEmbed videoId={project.src} autoPlay={true} loop={true} interactive={true} />
                             ) : project.type === 'instagram' ? (
                                 <iframe
                                     src={`https://www.instagram.com/p/${project.src}/embed`}
@@ -70,9 +82,49 @@ export default async function WorkPage({ params }: { params: Promise<{ id: strin
 
                         <h3 className="text-gray-400 uppercase tracking-widest text-xs mb-2">Description</h3>
                         <p className="text-base text-gray-300 font-light leading-relaxed">
-                            {project.description}
                         </p>
                     </div>
+                </div>
+
+                {/* Project Navigation */}
+                <div className="mt-24 pt-12 border-t border-white/10 flex justify-between items-center">
+                    {(() => {
+                        const currentIndex = projects.findIndex(p => p.id === id);
+                        const prevProject = currentIndex > 0 ? projects[currentIndex - 1] : null;
+                        const nextProject = currentIndex < projects.length - 1 ? projects[currentIndex + 1] : null;
+
+                        return (
+                            <>
+                                <div className="flex-1">
+                                    {prevProject && (
+                                        <Link href={`/work/${prevProject.id}`} className="group flex flex-col items-start gap-2 hover:opacity-70 transition-opacity">
+                                            <span className="text-[10px] uppercase tracking-[0.2em] text-gray-500 flex items-center">
+                                                <ChevronLeft className="w-3 h-3 mr-1" /> Previous
+                                            </span>
+                                            <span className="text-sm md:text-base font-medium text-white group-hover:text-brand-gold transition-colors line-clamp-1">
+                                                {prevProject.client}
+                                            </span>
+                                        </Link>
+                                    )}
+                                </div>
+
+                                <div className="w-[1px] h-12 bg-white/10 mx-8"></div>
+
+                                <div className="flex-1 text-right">
+                                    {nextProject && (
+                                        <Link href={`/work/${nextProject.id}`} className="group flex flex-col items-end gap-2 hover:opacity-70 transition-opacity">
+                                            <span className="text-[10px] uppercase tracking-[0.2em] text-gray-500 flex items-center">
+                                                Next <ChevronRight className="w-3 h-3 ml-1" />
+                                            </span>
+                                            <span className="text-sm md:text-base font-medium text-white group-hover:text-brand-gold transition-colors line-clamp-1">
+                                                {nextProject.client}
+                                            </span>
+                                        </Link>
+                                    )}
+                                </div>
+                            </>
+                        );
+                    })()}
                 </div>
             </div>
         </div>

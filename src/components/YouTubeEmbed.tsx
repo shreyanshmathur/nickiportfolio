@@ -7,20 +7,27 @@ interface YouTubeEmbedProps {
     className?: string;
     autoPlay?: boolean;
     loop?: boolean;
+    interactive?: boolean;
 }
 
-export default function YouTubeEmbed({ videoId, className = "", autoPlay = true, loop = true }: YouTubeEmbedProps) {
+export default function YouTubeEmbed({ videoId, className = "", autoPlay = true, loop = true, interactive = false }: YouTubeEmbedProps) {
     const [isIframeLoaded, setIsIframeLoaded] = useState(false);
 
+    // Timeout fallback for loading state
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsIframeLoaded(true);
+        }, 3000); // Fail gracefully after 3 seconds
+        return () => clearTimeout(timer);
+    }, [videoId]);
+
     // We use the youtube nocookie domain, disable controls, mute, and loop.
-    // The 'playlist' parameter is required for 'loop' to work on single videos.
-    const src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=${autoPlay ? 1 : 0}&mute=1&controls=0&showinfo=0&rel=0&modestbranding=1&loop=${loop ? 1 : 0}&playlist=${videoId}&playsinline=1`;
+    const src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=${autoPlay ? 1 : 0}&mute=1&controls=${interactive ? 1 : 0}&showinfo=0&rel=0&modestbranding=1&loop=${loop ? 1 : 0}&playlist=${videoId}&playsinline=1`;
 
     return (
         <div className={`relative w-full h-full overflow-hidden bg-black ${className}`}>
             <iframe
-                className={`absolute top-1/2 left-1/2 w-[150%] h-[150%] -translate-x-1/2 -translate-y-1/2 pointer-events-none transition-opacity duration-1000 ${isIframeLoaded ? "opacity-100" : "opacity-0"
-                    }`}
+                className={`absolute top-1/2 left-1/2 w-full h-full -translate-x-1/2 -translate-y-1/2 transition-opacity duration-1000 ${isIframeLoaded ? "opacity-100" : "opacity-0"} ${interactive ? "" : "pointer-events-none"}`}
                 src={src}
                 title="YouTube video player"
                 frameBorder="0"
